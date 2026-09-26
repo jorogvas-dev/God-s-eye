@@ -27,23 +27,23 @@ Each URL has this exact form, where the folder below replaces `<folder>`:
 `https://cdn.uab.org/images/cctv/images/cctv/<folder>/cctv.jpg`.
 Application IDs are `bulgaria-sba-` plus the folder's numeric suffix.
 
-| SBA marker ID | Image folder | Official name | Latitude | Longitude | Check on 2026-09-26 |
-| --- | --- | --- | --- | --- | --- |
-| 1 | cctv_01 | ГКПП Кулата - посока Гърция | 41.3829516 | 23.3624983 | JPEG; old Last-Modified (2025-03-17) |
-| 2 | cctv_02 | ГКПП Кулата - посока София | 41.3829516 | 23.3624983 | Recent JPEG |
-| 3 | cctv_103 | ОМВ Окръжна болница, гр. София | 42.6616918 | 23.3773061 | JPEG; old Last-Modified (2026-09-21) |
-| 5 | cctv_104 | ОМВ - Околовръстен път Бояна | 42.65153 | 23.28747 | Recent JPEG |
-| 8 | cctv_105 | ОМВ Слънчев Бряг | 42.6931743 | 27.7003937 | JPEG; old Last-Modified (2026-01-25) |
-| 11 | cctv_106 | ОМВ Петолъчка | 42.6463887 | 26.6688425 | JPEG; old Last-Modified (2026-05-29) |
-| 14 | cctv_107 | ОМВ Момково | 41.8126723 | 26.1614012 | Recent JPEG |
-| 17 | cctv_108 | ОМВ Изгрев, гр. Бургас | 42.5282174 | 27.4522148 | Recent JPEG |
-| 20 | cctv_109 | ОМВ Оризово | 42.1921184 | 25.191368 | Recent JPEG |
-| 23 | cctv_110 | ОМВ Пловдив, Мария Луиза | 42.149601 | 24.77775 | HTTP 404; normal unavailable fallback |
-| 26 | cctv_111 | ОМВ Бяла | 43.46971 | 25.71497 | Recent JPEG |
-| 32 | cctv_113 | ОМВ - Варна бул. В. Варненчик | 43.2158857 | 27.8965658 | Recent JPEG |
-| 35 | cctv_114 | ОМВ - магистрала Струма 166 км. | 41.3968512 | 23.3558197 | Recent JPEG |
-| 39 | cctv_102 | ОМВ - Осиковица | 42.9546901 | 24.0212764 | Recent JPEG |
-| 40 | cctv_115 | Петрохан | 43.121385 | 23.124707 | JPEG; old Last-Modified (2026-08-02) |
+| SBA marker ID | Image folder | Official name                   | Latitude   | Longitude  | Check on 2026-09-26                   |
+| ------------- | ------------ | ------------------------------- | ---------- | ---------- | ------------------------------------- |
+| 1             | cctv_01      | ГКПП Кулата - посока Гърция     | 41.3829516 | 23.3624983 | JPEG; old Last-Modified (2025-03-17)  |
+| 2             | cctv_02      | ГКПП Кулата - посока София      | 41.3829516 | 23.3624983 | Recent JPEG                           |
+| 3             | cctv_103     | ОМВ Окръжна болница, гр. София  | 42.6616918 | 23.3773061 | JPEG; old Last-Modified (2026-09-21)  |
+| 5             | cctv_104     | ОМВ - Околовръстен път Бояна    | 42.65153   | 23.28747   | Recent JPEG                           |
+| 8             | cctv_105     | ОМВ Слънчев Бряг                | 42.6931743 | 27.7003937 | JPEG; old Last-Modified (2026-01-25)  |
+| 11            | cctv_106     | ОМВ Петолъчка                   | 42.6463887 | 26.6688425 | JPEG; old Last-Modified (2026-05-29)  |
+| 14            | cctv_107     | ОМВ Момково                     | 41.8126723 | 26.1614012 | Recent JPEG                           |
+| 17            | cctv_108     | ОМВ Изгрев, гр. Бургас          | 42.5282174 | 27.4522148 | Recent JPEG                           |
+| 20            | cctv_109     | ОМВ Оризово                     | 42.1921184 | 25.191368  | Recent JPEG                           |
+| 23            | cctv_110     | ОМВ Пловдив, Мария Луиза        | 42.149601  | 24.77775   | HTTP 404; normal unavailable fallback |
+| 26            | cctv_111     | ОМВ Бяла                        | 43.46971   | 25.71497   | Recent JPEG                           |
+| 32            | cctv_113     | ОМВ - Варна бул. В. Варненчик   | 43.2158857 | 27.8965658 | Recent JPEG                           |
+| 35            | cctv_114     | ОМВ - магистрала Струма 166 км. | 41.3968512 | 23.3558197 | Recent JPEG                           |
+| 39            | cctv_102     | ОМВ - Осиковица                 | 42.9546901 | 24.0212764 | Recent JPEG                           |
+| 40            | cctv_115     | Петрохан                        | 43.121385  | 23.124707  | JPEG; old Last-Modified (2026-08-02)  |
 
 All 15 locations are integrated; none are omitted. Both Kulata cameras use
 the same coordinate because that is what SBA publishes. The verification
@@ -118,3 +118,31 @@ and shared data-credit registry identify SBA. See also `DATA_SOURCES.md`.
 Automated coverage: `node --test src/data/cctvBulgaria.test.mjs`, plus the
 existing CCTV proxy, catalog, source, rendering and UI suites. All automated
 upstream responses are mocked.
+
+## Changed files and validation
+
+- `config/cctv_sources.bulgaria.json`: the 15 verified metadata records.
+- `server/providers/cctv/{constants,sources,catalog}.js`: source loading,
+  validation and catalog registration.
+- `server/providers/cctv/media.js` and `server/providers/cctv.js`: shared frame
+  fetching, JPEG validation, freshness reporting and local media redirection.
+- `src/data/dataCredits.js`, `DATA_SOURCES.md`, `.env.example` and this document:
+  attribution, provenance, licensing and the optional disable switch.
+- `src/data/cctvBulgaria.test.mjs`: 13 mocked catalog, security, health and
+  timeout tests.
+- `build/vite.js` and `src/tooling/viteBuild.test.mjs`: exclude runtime caches
+  and logs from dev watching. A Windows EBUSY error while watching the downloaded
+  source page had stopped localhost; source files remain watched normally.
+
+Validation on 2026-09-26: relevant CCTV/data-credit/Vite tests passed (298
+passing, 4 existing skips; the Vite tests were rerun as the file owner because
+the sandbox cannot read the protected `.env`). Import/package boundary checks,
+format checks for changed code, and production build passed. The build emitted
+its large-chunk warning. This repository defines no separate lint or typecheck
+script.
+
+A hidden-browser smoke check confirmed the application initializes, the API
+serves all 15 records with correct Bulgarian text, Kulata and Petrohan JPEGs
+decode through the frame proxy, Petrohan is marked stale, and the unavailable
+Plovdiv feed falls back cleanly. The dev server also continued returning HTTP
+200 while a cache file was held under an exclusive Windows file lock.

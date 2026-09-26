@@ -58,6 +58,14 @@ test('build helper does not discover environment values or construct local provi
   }
 });
 
+test('dev watching excludes runtime cache and log files that may be locked on Windows', () => {
+  const { server } = createBrowserViteConfig();
+  assert.deepEqual(server.watch.ignored, [
+    '**/.gev-cache/**',
+    '**/.gev-logs/**',
+  ]);
+});
+
 test('root config retains existing named exports and standalone provider order', () => {
   for (const [name, value] of Object.entries(providers))
     assert.equal(compatibility[name], value, name);

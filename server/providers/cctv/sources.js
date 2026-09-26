@@ -1304,7 +1304,10 @@ export function loadBulgariaSourcesFromCatalog({
   let rows;
   try {
     rows = JSON.parse(
-      fs.readFileSync(path.resolve(sourceRoot, DEFAULT_BULGARIA_SOURCE_FILE), 'utf8'),
+      fs.readFileSync(
+        path.resolve(sourceRoot, DEFAULT_BULGARIA_SOURCE_FILE),
+        'utf8',
+      ),
     );
   } catch {
     return [];
@@ -1313,16 +1316,29 @@ export function loadBulgariaSourcesFromCatalog({
   const cameras = new Map();
   for (const item of rows) {
     if (!item || typeof item !== 'object') continue;
-    const match = typeof item.id === 'string' && /^bulgaria-sba-(\d{2,3})$/.exec(item.id);
+    const match =
+      typeof item.id === 'string' && /^bulgaria-sba-(\d{2,3})$/.exec(item.id);
     // Pin the entire URL, not a hostname substring. No credentials, custom
     // ports, query parameters or arbitrary paths from catalog edits.
-    if (!match || item.url !== `${BULGARIA_IMAGE_ORIGIN}/images/cctv/images/cctv/cctv_${match[1]}/cctv.jpg`) continue;
+    if (
+      !match ||
+      item.url !==
+        `${BULGARIA_IMAGE_ORIGIN}/images/cctv/images/cctv/cctv_${match[1]}/cctv.jpg`
+    )
+      continue;
     if (typeof item.name !== 'string' || !item.name.trim()) continue;
     const { lat, lon } = item;
     // Geographic sanity only: the shipped coordinates themselves come from
     // SBA, never from these bounds or a place-name/geocoding guess.
-    if (!Number.isFinite(lat) || !Number.isFinite(lon) ||
-        lat < 41 || lat > 44.3 || lon < 22.3 || lon > 28.7) continue;
+    if (
+      !Number.isFinite(lat) ||
+      !Number.isFinite(lon) ||
+      lat < 41 ||
+      lat > 44.3 ||
+      lon < 22.3 ||
+      lon > 28.7
+    )
+      continue;
     if (cameras.has(item.id)) continue;
     cameras.set(item.id, {
       id: item.id,
@@ -1330,7 +1346,8 @@ export function loadBulgariaSourcesFromCatalog({
       city: 'Bulgaria',
       cityId: 'bulgaria',
       provider: 'SBA / Union of Bulgarian Motorists',
-      credit: 'Съюз на българските автомобилисти / SBA — https://www.sba.bg/cctv',
+      credit:
+        'Съюз на българските автомобилисти / SBA — https://www.sba.bg/cctv',
       lat,
       lon,
       headingDeg: fallbackHeadingFromId(item.id),
@@ -1343,7 +1360,8 @@ export function loadBulgariaSourcesFromCatalog({
       sourceKind: 'bulgaria-sba',
       url: item.url,
       snapshotUrl: item.url,
-      license: 'Publicly accessible SBA traffic imagery; provider retains rights. Runtime access only; comply with provider terms.',
+      license:
+        'Publicly accessible SBA traffic imagery; provider retains rights. Runtime access only; comply with provider terms.',
     });
   }
   return [...cameras.values()];

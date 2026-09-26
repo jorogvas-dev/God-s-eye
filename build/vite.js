@@ -31,6 +31,9 @@ export function createBrowserViteConfig({
     server: {
       host: host || 'localhost',
       port: parseInt(port, 10) || 4173,
+      // Runtime caches and logs are not source files. Watching files while
+      // providers write them can crash the dev server with EBUSY on Windows.
+      watch: { ignored: ['**/.gev-cache/**', '**/.gev-logs/**'] },
       allowedHosts:
         host === '0.0.0.0' || host === '::'
           ? true

@@ -501,7 +501,7 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
             ? await fetchTxdotSnapshot(upstreamCandidate)
             : source?.sourceKind === 'bulgaria-sba'
               ? await fetchBulgariaSnapshot(upstreamCandidate)
-            : await fetchCctvImageFromUpstream(upstreamCandidate);
+              : await fetchCctvImageFromUpstream(upstreamCandidate);
         if (upstreamImage?.ok) {
           setHealth(cameraId, {
             status: 'ok',

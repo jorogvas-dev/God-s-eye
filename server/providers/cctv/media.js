@@ -552,7 +552,12 @@ export async function fetchCctvImageFromUpstream(
     }
     const body = await readCappedResponseBytes(upstream, maxBytes);
     if (!body) return null;
-    return { ok: true, body, contentType, lastModified: upstream.headers.get('last-modified') };
+    return {
+      ok: true,
+      body,
+      contentType,
+      lastModified: upstream.headers.get('last-modified'),
+    };
   } catch {
     return null;
   } finally {
@@ -563,12 +568,24 @@ export async function fetchCctvImageFromUpstream(
 
 /** SBA snapshots share the bounded frame proxy; old JPEGs are not live feeds. */
 export async function fetchBulgariaSnapshot(url, options = {}) {
-  if (typeof url !== 'string' ||
-      !/^https:\/\/cdn\.uab\.org\/images\/cctv\/images\/cctv\/cctv_\d{2,3}\/cctv\.jpg$/.test(url) ||
-      new URL(url).origin !== BULGARIA_IMAGE_ORIGIN) return null;
+  if (
+    typeof url !== 'string' ||
+    !/^https:\/\/cdn\.uab\.org\/images\/cctv\/images\/cctv\/cctv_\d{2,3}\/cctv\.jpg$/.test(
+      url,
+    ) ||
+    new URL(url).origin !== BULGARIA_IMAGE_ORIGIN
+  )
+    return null;
   const image = await fetchCctvImageFromUpstream(url, options);
-  if (!image || image.contentType.split(';')[0].trim().toLowerCase() !== 'image/jpeg' ||
-      image.body.length < 4 || image.body[0] !== 0xff || image.body[1] !== 0xd8 || image.body[2] !== 0xff) return null;
+  if (
+    !image ||
+    image.contentType.split(';')[0].trim().toLowerCase() !== 'image/jpeg' ||
+    image.body.length < 4 ||
+    image.body[0] !== 0xff ||
+    image.body[1] !== 0xd8 ||
+    image.body[2] !== 0xff
+  )
+    return null;
   const modifiedAt = Date.parse(image.lastModified);
   const now = Date.now();
   const knownTime = Number.isFinite(modifiedAt) && modifiedAt <= now + 60_000;
@@ -578,8 +595,9 @@ export async function fetchBulgariaSnapshot(url, options = {}) {
     health: {
       status: stale || !knownTime ? 'degraded' : 'ok',
       sourceKind: stale ? 'stale' : 'snapshot',
-      message: !knownTime ? 'SBA snapshot freshness unknown (no valid Last-Modified)' :
-        `${stale ? 'Stale SBA snapshot; older than 10 minutes' : 'SBA snapshot'} — last modified ${new Date(modifiedAt).toISOString()}`,
+      message: !knownTime
+        ? 'SBA snapshot freshness unknown (no valid Last-Modified)'
+        : `${stale ? 'Stale SBA snapshot; older than 10 minutes' : 'SBA snapshot'} — last modified ${new Date(modifiedAt).toISOString()}`,
     },
   };
 }
