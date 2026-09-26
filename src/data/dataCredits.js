@@ -202,6 +202,13 @@ export const DATA_CREDITS = [
       '<a href="https://data.calgary.ca/stories/s/Open-Calgary-Terms-of-Use/u45n-7awa" target="_blank" rel="noopener">Open Government Licence – City of Calgary</a>',
   },
   {
+    key: 'bulgaria-sba-cctv',
+    html:
+      'Traffic cameras (Bulgaria): ' +
+      '<a href="https://www.sba.bg/cctv" target="_blank" rel="noopener">Съюз на българските автомобилисти / SBA</a>. ' +
+      'Publicly accessible imagery, accessed at runtime; provider retains rights. Follow provider terms.',
+  },
+  {
     key: 'gbfs',
     html: 'Bikeshare availability: GBFS operator feeds (e.g. Austin BCycle)',
   },

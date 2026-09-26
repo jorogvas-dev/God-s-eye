@@ -9,6 +9,7 @@ import {
   proxyMediaResponse,
   fetchCctvImageFromUpstream,
   fetchTxdotSnapshot,
+  fetchBulgariaSnapshot,
   fetchCctvMediaUpstream,
   watchDownstreamClose,
 } from './cctv/media.js';
@@ -226,6 +227,16 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
           }
           if (req.method !== 'GET') {
             res.writeHead(405);
+            res.end();
+            return;
+          }
+          // SBA serves still JPEGs. Reuse the bounded, host-pinned frame
+          // path and its freshness/health handling for direct media requests.
+          if (source?.sourceKind === 'bulgaria-sba' && !match[2]) {
+            res.writeHead(307, {
+              Location: `/api/cctv/frame/${encodeURIComponent(cameraId)}`,
+              'Cache-Control': 'no-store',
+            });
             res.end();
             return;
           }
@@ -488,6 +499,8 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
         const upstreamImage =
           source?.sourceKind === 'txdot-its'
             ? await fetchTxdotSnapshot(upstreamCandidate)
+            : source?.sourceKind === 'bulgaria-sba'
+              ? await fetchBulgariaSnapshot(upstreamCandidate)
             : await fetchCctvImageFromUpstream(upstreamCandidate);
         if (upstreamImage?.ok) {
           setHealth(cameraId, {
@@ -495,6 +508,7 @@ export function cctvProxy({ sourceRoot = process.cwd() } = {}) {
             sourceKind: 'snapshot',
             label: source?.provider || 'Configured source',
             message: 'Upstream snapshot active',
+            ...upstreamImage.health,
           });
           res.writeHead(200, {
             'Content-Type': upstreamImage.contentType,

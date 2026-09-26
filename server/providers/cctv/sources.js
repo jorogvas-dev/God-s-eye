@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
+  DEFAULT_BULGARIA_SOURCE_FILE,
+  BULGARIA_IMAGE_ORIGIN,
   DEFAULT_AUSTIN_ROWS_URL,
   DEFAULT_AUSTIN_MAX_SOURCES,
   AUSTIN_DOWNTOWN,
@@ -1289,6 +1291,62 @@ export function loadWarendorfSourcesFromCatalog({
   }
   console.log('[CCTV] Loaded Warendorf camera sources:', cameras.length);
   return cameras;
+}
+
+/**
+ * SBA Bulgaria: a verified snapshot of the public page's map markers and
+ * image references. Metadata only; frames are fetched on demand by the proxy.
+ * See docs/CCTV-BULGARIA.md for provenance and how to update the registry.
+ */
+export function loadBulgariaSourcesFromCatalog({
+  sourceRoot = process.cwd(),
+} = {}) {
+  let rows;
+  try {
+    rows = JSON.parse(
+      fs.readFileSync(path.resolve(sourceRoot, DEFAULT_BULGARIA_SOURCE_FILE), 'utf8'),
+    );
+  } catch {
+    return [];
+  }
+  if (!Array.isArray(rows)) return [];
+  const cameras = new Map();
+  for (const item of rows) {
+    if (!item || typeof item !== 'object') continue;
+    const match = typeof item.id === 'string' && /^bulgaria-sba-(\d{2,3})$/.exec(item.id);
+    // Pin the entire URL, not a hostname substring. No credentials, custom
+    // ports, query parameters or arbitrary paths from catalog edits.
+    if (!match || item.url !== `${BULGARIA_IMAGE_ORIGIN}/images/cctv/images/cctv/cctv_${match[1]}/cctv.jpg`) continue;
+    if (typeof item.name !== 'string' || !item.name.trim()) continue;
+    const { lat, lon } = item;
+    // Geographic sanity only: the shipped coordinates themselves come from
+    // SBA, never from these bounds or a place-name/geocoding guess.
+    if (!Number.isFinite(lat) || !Number.isFinite(lon) ||
+        lat < 41 || lat > 44.3 || lon < 22.3 || lon > 28.7) continue;
+    if (cameras.has(item.id)) continue;
+    cameras.set(item.id, {
+      id: item.id,
+      name: item.name.trim(),
+      city: 'Bulgaria',
+      cityId: 'bulgaria',
+      provider: 'SBA / Union of Bulgarian Motorists',
+      credit: 'Съюз на българските автомобилисти / SBA — https://www.sba.bg/cctv',
+      lat,
+      lon,
+      headingDeg: fallbackHeadingFromId(item.id),
+      headingConfidence: 'low',
+      pitchDeg: -18,
+      fovDeg: 44,
+      rangeM: 145,
+      mountHeightM: 8,
+      feedType: 'image',
+      sourceKind: 'bulgaria-sba',
+      url: item.url,
+      snapshotUrl: item.url,
+      license: 'Publicly accessible SBA traffic imagery; provider retains rights. Runtime access only; comply with provider terms.',
+    });
+  }
+  return [...cameras.values()];
 }
 
 /**

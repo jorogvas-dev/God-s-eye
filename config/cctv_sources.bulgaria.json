@@ -1,0 +1,107 @@
+[
+  {
+    "id": "bulgaria-sba-01",
+    "name": "ГКПП Кулата - посока Гърция",
+    "lat": 41.3829516,
+    "lon": 23.3624983,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_01/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-02",
+    "name": "ГКПП Кулата - посока София",
+    "lat": 41.3829516,
+    "lon": 23.3624983,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_02/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-103",
+    "name": "ОМВ Окръжна болница, гр. София",
+    "lat": 42.6616918,
+    "lon": 23.3773061,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_103/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-104",
+    "name": "ОМВ - Околовръстен път Бояна",
+    "lat": 42.65153,
+    "lon": 23.28747,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_104/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-105",
+    "name": "ОМВ Слънчев Бряг",
+    "lat": 42.6931743,
+    "lon": 27.7003937,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_105/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-106",
+    "name": "ОМВ Петолъчка",
+    "lat": 42.6463887,
+    "lon": 26.6688425,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_106/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-107",
+    "name": "ОМВ Момково",
+    "lat": 41.8126723,
+    "lon": 26.1614012,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_107/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-108",
+    "name": "ОМВ Изгрев, гр. Бургас",
+    "lat": 42.5282174,
+    "lon": 27.4522148,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_108/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-109",
+    "name": "ОМВ Оризово",
+    "lat": 42.1921184,
+    "lon": 25.191368,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_109/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-110",
+    "name": "ОМВ Пловдив, Мария Луиза",
+    "lat": 42.149601,
+    "lon": 24.77775,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_110/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-111",
+    "name": "ОМВ Бяла",
+    "lat": 43.46971,
+    "lon": 25.71497,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_111/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-113",
+    "name": "ОМВ - Варна бул. В. Варненчик",
+    "lat": 43.2158857,
+    "lon": 27.8965658,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_113/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-114",
+    "name": "ОМВ - магистрала Струма 166 км.",
+    "lat": 41.3968512,
+    "lon": 23.3558197,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_114/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-102",
+    "name": "ОМВ - Осиковица",
+    "lat": 42.9546901,
+    "lon": 24.0212764,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_102/cctv.jpg"
+  },
+  {
+    "id": "bulgaria-sba-115",
+    "name": "Петрохан",
+    "lat": 43.121385,
+    "lon": 23.124707,
+    "url": "https://cdn.uab.org/images/cctv/images/cctv/cctv_115/cctv.jpg"
+  }
+]

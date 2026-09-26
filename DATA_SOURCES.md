@@ -103,6 +103,24 @@ The optional Local ADS-B layer and the broadcast-FM receiver use radio you recei
 
 ---
 
+### Bulgarian road cameras (SBA)
+
+Source: **Съюз на българските автомобилисти / SBA (Union of Bulgarian
+Motorists)**, [official camera page](https://www.sba.bg/cctv). These are
+publicly accessible traffic-camera JPEGs, fetched at runtime from
+`https://cdn.uab.org` through the existing CCTV frame proxy. Images are not
+bundled, recorded, or permanently cached. Public access is **not an open-data
+license**: the original provider retains rights to the imagery; users and
+deployers must comply with provider terms.
+
+`config/cctv_sources.bulgaria.json` contains only metadata for the 15 cameras
+listed on 2026-09-26. Names, coordinates and image paths were taken directly
+from the official page's camera controls and Google Maps marker declarations.
+No coordinates were guessed. See [Bulgaria CCTV notes](docs/CCTV-BULGARIA.md)
+for per-camera provenance, availability, maintenance and manual checks.
+The selected-camera panel names SBA and its source URL; the shared data-credit
+registry also includes SBA. Disable with `CCTV_BULGARIA_ENABLED=0`.
+
 ## Bundled snapshots
 
 Static datasets shipped in the repo for an out-of-the-box experience. **None are MIT** — each keeps its own license (see the carve-out in [LICENSE](LICENSE)). Each folder also has its own provenance README.

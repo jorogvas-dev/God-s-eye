@@ -1,4 +1,8 @@
 export const DEFAULT_CCTV_SOURCE_FILE = 'config/cctv_sources.austin.json';
+/** SBA's public map supplies the coordinates and JPEG paths in this catalog. */
+export const DEFAULT_BULGARIA_SOURCE_FILE = 'config/cctv_sources.bulgaria.json';
+export const BULGARIA_IMAGE_ORIGIN = 'https://cdn.uab.org';
+export const BULGARIA_STALE_FRAME_MS = 10 * 60 * 1000;
 /** Austin Open Data portal endpoint for traffic camera records. */
 export const DEFAULT_AUSTIN_ROWS_URL =
   'https://data.austintexas.gov/api/views/b4k4-adkb/rows.json?accessType=DOWNLOAD';
